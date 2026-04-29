@@ -1,0 +1,62 @@
+{
+  "info": {
+    "name": "Carrier Integration Shipment Workflow System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Shipment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/shipments",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerName\": \"Hutchinson Martin\",\n  \"originCity\": \"Hyderabad\",\n  \"destinationCity\": \"Bangalore\",\n  \"packageWeight\": 2.5,\n  \"shipmentType\": \"STANDARD\",\n  \"deliverySpeed\": \"TWO_DAY\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Select Carrier",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/carriers/select/1"
+      }
+    },
+    {
+      "name": "Generate Label",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/labels/generate/1"
+      }
+    },
+    {
+      "name": "Validate Invoice",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/invoices/validate",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"shipmentId\": 1,\n  \"invoiceNumber\": \"INV-1001\",\n  \"carrierChargedAmount\": 145.0\n}"
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
